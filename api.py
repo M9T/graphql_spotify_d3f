@@ -23,22 +23,14 @@ def get_artist_id(sp):
     """
     artist_name = "Die drei ???"
     # search query
-    search = sp.search(artist_name, limit=1, type='artist', market="DE")
-    return search['artists']['items'][0]
+    search_result = sp.search(artist_name, limit=1, type='artist', market="DE")
+    artist_id = search_result['artists']['items'][0]['id']
+    return artist_id
 
 
-def get_album(sp):
-    """ returns a single album
-    """
-    album_id = "39K0Sczt1mIbW33lB5RNer"
-    # get album
-    album = sp.album(album_id)
-    return album
-
-
-def get_artist_albumsm(sp):
+def get_artist_album(sp):
     """ Get Spotify catalog information about an artist’s albums
     """
     artist_id = "3meJIgRw7YleJrmbpbJK6S"
-    result = sp.get_artist_albumsm(artist_id)
-    return result
+    api_result = sp.artist_albums(artist_id)
+    return api_result
