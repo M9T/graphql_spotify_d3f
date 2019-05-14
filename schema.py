@@ -133,20 +133,20 @@ class Query(ObjectType):
         return json2obj(json.dumps(album_json))
 
 
-'''To see results directly in the console, remove the comments here.
-'''
-import graphene
-schema = graphene.Schema(query=Query)
-query = """
-    {
-        album{
-            name
-            type
-        }
-    }
-"""
+# '''To see results directly in the console, remove the comments here.
+# '''
+# import graphene
+# schema = graphene.Schema(query=Query)
+# query = """
+#     {
+#         album{
+#             name
+#             type
+#         }
+#     }
+# """
 
-if __name__ == "__main__":
-    result = schema.execute(query)
-    items = dict(result.data.items())
-    print(json.dumps(items, indent=2))
+# if __name__ == "__main__":
+#     result = schema.execute(query)
+#     items = dict(result.data.items())
+#     print(json.dumps(items, indent=2))
