@@ -30,5 +30,5 @@ def get_artist_id(sp, artist_name):
 def get_artist_album(sp, artist_id):
     """ Get Spotify catalog information about an artist’s albums
     """
-    api_result = sp.artist_albums(artist_id)
+    api_result = sp.artist_albums(artist_id, limit=50)
     return api_result

@@ -13,13 +13,15 @@ api_album_output = get_artist_album(sp, artist_id)
 
 
 def _json_object_hook(d):
-    return namedtuple('X', d.keys())(*d.values())
+    tuples = namedtuple('X', d.keys())(*d.values())
+    return tuples
 
 
 def json2obj(data):
-    ''' Convert json dictionary to objects
+    ''' Convert json into a Python object
     '''
-    return json.loads(data, object_hook=_json_object_hook)
+    converted = json.loads(data, object_hook=_json_object_hook)
+    return converted
 
 
 class Artist(ObjectType):
@@ -36,11 +38,11 @@ class Artist(ObjectType):
             "uri": "spotify:artist:3meJIgRw7YleJrmbpbJK6S"
         ]
     '''
-    external_urls = String()
+    # external_urls = String()
     href = String()
     id = ID()
     name = String()
-    type = String()
+    # type = String()
     uri = String()
 
 
@@ -65,9 +67,9 @@ class Image(ObjectType):
             }
         ],
     '''
-    height = Int()
+    # height = Int()
     url = String()
-    width = Int()
+    # width = Int()
 
 
 class Album(ObjectType):
@@ -95,15 +97,15 @@ class Album(ObjectType):
     '''
     album_group = String()
     album_type = String()
-    artists = Field(Artist)
-    available_markets = List(String)
-    external_urls = String()
+    # artists = Field(Artist)
+    # available_markets = List(String)
+    # external_urls = String()
     href = String()
     id = ID()
-    images = Field(Image)
+    # images = Field(Image)
     name = String()
     release_date = String()
-    release_date_precision = Int()
+    # release_date_precision = Int()
     total_tracks = Int()
     type = String()
     uri = String()
@@ -111,23 +113,23 @@ class Album(ObjectType):
 
 class Query(ObjectType):
 
-    album = List(Album)
     artist = List(Artist)
     image = List(Image)
+    album = List(Album)
 
-    def resolve_artist(self):
+    def resolve_artist(self, info):
         # consider only artist subset
         artist_json = api_album_output['items'][0]['artists']
         return json2obj(json.dumps(artist_json))
 
-    def resolve_image(self):
+    def resolve_image(self, info):
         # consider only image subset
         image_json = api_album_output['items'][0]['images']
         return json2obj(json.dumps(image_json))
 
-    def resolve_album(self):
+    def resolve_album(self, info):
         # consider only album subset
-        album_json = api_album_output['items'][0]
+        album_json = api_album_output['items']
         return json2obj(json.dumps(album_json))
 
 
@@ -137,8 +139,9 @@ import graphene
 schema = graphene.Schema(query=Query)
 query = """
     {
-        artist{
+        album{
             name
+            type
         }
     }
 """
