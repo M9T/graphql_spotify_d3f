@@ -1,3 +1,7 @@
+'''
+Mini test scenario: This local.py file shows the idea behind graphql.
+'''
+
 import graphene
 import json
 
