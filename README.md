@@ -20,3 +20,6 @@ To run the whole application
 ```
 python server.py
 ```
+
+In the result we see the following GraphiQL interface.
+![https://github.com/M9T/D3F/blob/master/graphiql.jpg](https://github.com/M9T/D3F/blob/master/graphiql.jpg)
